@@ -6,14 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Propinas y Consumos</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-
     <header class="py-4 bg-primary">
         <h1 class="text-center text-white fs-3">Calculadora de Consumos y Propinas</h1>
     </header>
-
+    
     <div class="d-flex mt-4 justify-content-center">
         <button  data-bs-toggle="modal" data-bs-target="#formulario" type="button" class="btn btn-success">Nueva Orden</button>
     </div>
@@ -22,7 +20,7 @@
     <main id="platillos" class="container bg-light mt-5 p-4 d-none">
         <h2  class="text-center my-4">Platillos</h2>
 
-        <div class="contenido"></div>
+        <div class="contenido" id="divPlatillos"></div>
     </main>
 
     
@@ -61,8 +59,8 @@
                 </div>
             </div>
         </div>
-
-<script src="js/bootstrap.bundle.min.js"></script>
-<script src="js/app.js"></script>
+    
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
