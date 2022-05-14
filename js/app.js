@@ -9,6 +9,12 @@ let customer = {
     order: []
 };
 
+const categories = {
+    1: "Food",
+    2: "Drinks",
+    3: "Postres"
+};
+
 makeOrderBtn.addEventListener("click", validation);
 
 function makeOrder() {
@@ -83,17 +89,76 @@ function showFoodHtml(foodArray) {
 
     foodArray.forEach( food => {
         const row = document.createElement("div");
-        row.classList.add("row");
+        row.classList.add("row", "py-3", "border-top");
 
         const name = document.createElement("div");
         name.classList.add("col-md-4");
         name.textContent = food.nombre;
+
+        const price = document.createElement("div");
+        price.classList.add("col-md-3", "fw-bold");
+        price.textContent = `$${food.precio}`;
         
+        const category = document.createElement("div");
+        category.classList.add("col-md-3");
+        category.textContent = categories [food.categoria];
+
+        const input = document.createElement("input");
+        input.type = "number";
+        input.min = 0;
+        input.id = `product-${food.id}`;
+        input.classList.add("form-control");
+        input.value = 0;
+
+        //detect when user change the value and add it to the list
+        input.onchange = function() {
+            const quantity = Number(input.value);
+
+            //we pass an object with the food info and the quantity
+            //we use the spread operator to merge food object with quantity
+            addFoodToList({...food, quantity});
+        }
+
+        const quantityDiv = document.createElement("div");
+        quantityDiv.classList.add("col-md-2");
+        quantityDiv.appendChild(input);
+
         row.appendChild(name);
+        row.appendChild(price);
+        row.appendChild(category);
+        row.appendChild(quantityDiv);
         divContainer.appendChild(row);
     })
 
 
 
+}
+
+function addFoodToList(foodObject) {
+
+    let {order} = customer;
+    //first we check if the user put quantity to the food
+    if(foodObject.quantity > 0) {
+        //here we check if the food already exist
+        if( order.some( orderTemp => orderTemp.id === foodObject.id)) {
+            const updatedFoodObject = order.map( orderTemp => {
+                if(orderTemp.id === foodObject.id) {
+                    orderTemp.quantity = foodObject.quantity;
+                }
+                return orderTemp;
+            });
+        
+        //we assign the new array to the orders
+        customer.order = [...updatedFoodObject];
+        console.log(customer)
+        } else {
+            //food does not exist, so we add for the first time
+            customer.order = [...order, foodObject];
+            console.log(customer)
+        }
+
+        
+
+    }
 }
 
