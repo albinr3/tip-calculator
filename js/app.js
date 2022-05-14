@@ -150,15 +150,33 @@ function addFoodToList(foodObject) {
         
         //we assign the new array to the orders
         customer.order = [...updatedFoodObject];
-        console.log(customer)
+        
         } else {
             //food does not exist, so we add for the first time
             customer.order = [...order, foodObject];
-            console.log(customer)
+            
         }
-
-        
-
+    } else {
+        //delete food when the quantity is 0
+        const result = order.filter( orderTemp => orderTemp.id != foodObject.id);
+        customer.order = [...result]
     }
+
+    //this will print the html of all the orders
+    updateSummary(customer.order);
 }
 
+function updateSummary(orders) {
+    const divSummary = document.querySelector("#divResumen");
+
+    const summary = document.createElement("div");
+    summary.classList.add("col-md-6");
+
+    const tableSummary = document.createElement("p");
+    tableSummary.classList.add("fw-bold");
+    tableSummary.innerHTML = `
+        Table: <span class="fw-normal">${customer.table}</span>
+    `;
+
+    divSummary.appendChild(tableSummary);
+}
